@@ -41,13 +41,36 @@ export default function Problem4({ initialCount = 100000 }: Problem4Props) {
           <li>Observe the improved performance after optimization.</li>
         </ol>
       </div>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - ${product.price.toFixed(2)} - {product.category}
-          </li>
-        ))}
-      </ul>
+
+      <div data-testid="product-list" style={{ marginTop: 16 }}>
+        <List
+          height={600}
+          itemCount={products.length}
+          itemSize={50}
+          width={"100%"}
+          overscanCount={5}
+        >
+          {({ index, style }: { index: number; style: React.CSSProperties }) => {
+            const product = products[index];
+            return (
+              <div
+                data-testid={`product-row-${index}`}
+                style={{
+                  ...style,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "8px",
+                  borderBottom: "1px solid #eee",
+                }}
+              >
+                <div>{product.name}</div>
+                <div>${product.price.toFixed(2)}</div>
+                <div>{product.category}</div>
+              </div>
+            );
+          }}
+        </List>
+      </div>
     </div>
   );
 }
